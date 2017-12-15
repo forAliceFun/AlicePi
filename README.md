@@ -1,2 +1,2 @@
 # AlicePi
-A lovely smart IoT Platform based on the Raspberry Pi
+A lovely and smart IoT Platform based on the Raspberry Pi
