@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title></title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap-toggle.min.css">
+    <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascripts/bootstrap-toggle.min.js"></script>
+    <style>
+      .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+      .toggle.ios .toggle-handle { border-radius: 20px; width:48px;}
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="javascripts/client.js"></script>
+    <h2 class="text-center">WiringPi/Pi4J Controller</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>3.3V</span></div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>5V</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 8 (SDA1/I2C)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="8" class="gpio-checkbox" data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>5V</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 9 (SCL1/I2C)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="9" class="gpio-checkbox" data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>Ground</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 7 (GPCLK0)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="7" class="gpio-checkbox" data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="14" class="gpio-checkbox" data-style="ios">
+          <div class="pull-right"> <span>GPIO 14 (TXD/UART)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>Ground</span></div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="15" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 15 (RXD/UART)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 0</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="0" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="18" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 18 (PCM_C/PWM0)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 2 </span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="2" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>Ground</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 3</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="3" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="4" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 4</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>3.3V</span></div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="5" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 5</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 12 (MOSI/SPI)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="12" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"><span>Ground</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 13 (MISO/SPI)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="13" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="6" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 6</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 14 (SCKL/SPI)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="14" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="10" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 10 (CE0/SPI)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>Ground</span></div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="11" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 11 (CE1/SPI)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 30 (SDA0/I2C)</span>
+        <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="30" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="31" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> 
+          <span>GPIO 31 (SCL0/I2C)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 21 (GPCLK1)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="21" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>Ground</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 22 (GPCLK2)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="22" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="26" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 26</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 23 (PWM1)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="23" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <div class="pull-right"> <span>Ground</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 24 (PCM_FS PWM1)</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="24" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="27" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 27</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>GPIO 25</span>
+          <div class="pull-right">
+            <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="25" class="gpio-checkbox"  data-style="ios">
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="28" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 28 (PCM_DIN)</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-sm-offset-2 col-md-offset-3 col-lg-offset-3"><span>Ground</span></div>
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+          <input data-toggle="toggle" data-onstyle="success" data-offstyle="danger" type="checkbox" data-gpio="29" class="gpio-checkbox"  data-style="ios">
+          <div class="pull-right"> <span>GPIO 29 (PCM_DOUT)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: fixed;width: 300px;top: 40px;right: 0px" >
+      <img src="images/j8header-3b-large.png" class="img-responsive" />
+    </div>
+    <div style="position: fixed;width: 300px;top: 60px;left: 0px" >
+      <img src="images/Raspberry-pi-3-2.jpg" class="img-responsive" />
+    </div>
+  </body>
+</html>
