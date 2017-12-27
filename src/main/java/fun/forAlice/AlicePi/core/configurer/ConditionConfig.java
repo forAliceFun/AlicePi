@@ -3,6 +3,8 @@ package fun.forAlice.AlicePi.core.configurer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,9 @@ import fun.forAlice.AlicePi.core.service.impl.GpioRaspServiceImpl;
 
 @Configuration
 public class ConditionConfig {
-	@Bean
+    Logger logger = LoggerFactory.getLogger(ConditionConfig.class);
+
+    @Bean
 	@Conditional(WindowsCondition.class)
 	public List<GpioPinDigitalOutput> gpioDemoService() {
 		List<GpioPinDigitalOutput> pinList  = new ArrayList<GpioPinDigitalOutput>();

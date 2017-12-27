@@ -24,6 +24,7 @@ public class RedisConfig {
      */
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
+    
     Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 
     @Value("${spring.redis.host}")
