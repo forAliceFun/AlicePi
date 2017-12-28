@@ -1,2 +1,5 @@
 # AlicePi
+
 A lovely and smart IoT Interface based on the Raspberry Pi
+
+[项目文档](https://foralice.gitbooks.io/alicepi/content/)
