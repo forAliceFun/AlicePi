@@ -7,8 +7,9 @@ AlicePi是一个有趣的智能物联网接入系统，基于树莓派3开发。
 ## 快速启动
 
 1. 在树莓派上安装Java8环境。（树莓派默认自带Java8。）
-2. 安装Redis。
-3. 使用超级用户权限启动AlicePi。
+1. 安装Redis。
+1. 下载AlicePi-core-*.jar,下载地址详见[发布记录](发布记录)
+1. 使用超级用户权限启动AlicePi。
 
 在浏览器打开
 http://raspberyypi.ip:7521/, 开始你的硬件之旅吧。
