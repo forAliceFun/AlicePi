@@ -43,29 +43,6 @@ public class ServiceInstanceRestController {
     	return 1;
     }
     
-    @GetMapping("/gpios")
-    public List<Gpio>  getGpios() {
-    	return gpioService.getGpioList();
-    }
     
-    @GetMapping("/gpios/{id}")
-    public Gpio getGpioById(@PathVariable("id") Integer id) {
-    	return gpioService.getGpioById(id);
-    }
-    
-    @PostMapping("/gpios/{id}")
-    public Gpio upsetGpioById(@PathVariable("id") Integer id,
-    							@RequestBody String json,
-    							HttpServletRequest request,
-    							HttpServletResponse response) {
-    	try {
-			Gpio myGpio = objectMapper.readValue(json, Gpio.class);
-			gpioService.updateGpio(myGpio);
-    	} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	return gpioService.getGpioById(id);
-    }
+
 }

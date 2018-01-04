@@ -19,8 +19,7 @@ import fun.forAlice.AlicePi.core.condition.LinuxCondition;
 import fun.forAlice.AlicePi.core.condition.WindowsCondition;
 import fun.forAlice.AlicePi.core.entity.GpioPinDigitalOutputDemo;
 import fun.forAlice.AlicePi.core.service.IGpioService;
-import fun.forAlice.AlicePi.core.service.impl.GpioDemoServiceImpl;
-import fun.forAlice.AlicePi.core.service.impl.GpioRaspServiceImpl;
+
 
 @Configuration
 public class ConditionConfig {

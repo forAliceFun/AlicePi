@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,6 +38,8 @@ public class GpioServiceImpl extends IRedisService<Gpio>{
     
 	@Autowired
 	private ObjectMapper objectMapper;
+    
+
     
 //    final GpioController gpio = GpioFactory.getInstance();
 
@@ -66,12 +69,23 @@ public class GpioServiceImpl extends IRedisService<Gpio>{
 		}
 	}
 
-    private List<Gpio> load(){
+	@Scheduled(cron = "*/5 * * * * *")
+	/**                | | | | | | 
+	 *                 | | | | | | 
+	 *                 | | | | | +----- any day of the week. 
+	 *                 | | | | +------- any month (September).
+	 *                 | | | +--------- any day of the month.
+	 *                 | | +----------- every hour of the day.
+	 *                 | +------------- top of the hour (minutes = 0).
+	 *                 +--------------- top of the minute (seconds = 0).
+	 */
+    public List<Gpio> load(){
     	for(int i=0;i<32;i++) {
     		Gpio gpio = (Gpio) ops.get(Gpio.generateKey(i));
     		this.gpioList.set(gpio.getId(), gpio);
     	}
     	this.refresh();
+    	logger.info("reload gpio status");
     	return this.gpioList;
     }
     private void save() {
@@ -84,11 +98,11 @@ public class GpioServiceImpl extends IRedisService<Gpio>{
     	for(Gpio it:gpioList) {
     		if(it.getOutput().equals(1)) {
     			pinList.get(it.getId()).high();
-    			System.out.println("on");
+    			logger.info("gpio pin "+it.getId()+" : "+"on");
     		}
     		else {
-    			System.out.println("off");
     			pinList.get(it.getId()).low();
+    			logger.info("gpio pin "+it.getId()+" : "+"off");
     		}
     		
     	}

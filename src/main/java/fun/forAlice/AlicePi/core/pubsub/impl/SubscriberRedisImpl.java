@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fun.forAlice.AlicePi.core.service.impl.GpioServiceImpl;
 import fun.forAlice.AlicePi.core.service.impl.MqRedisServiceImpl;
 import fun.forAlice.AlicePi.core.pubsub.bean.Handle;
 import redis.clients.jedis.Jedis;
@@ -32,10 +33,14 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisPubSub;
 
+@Service
 public class SubscriberRedisImpl {
     Logger logger = LoggerFactory.getLogger(MqRedisServiceImpl.class);
 
 	JedisPool jedisPool;
+	
+	@Autowired
+	GpioServiceImpl gpioService;
 
 	private Collection<Handle> handlePool;
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -97,9 +102,11 @@ public class SubscriberRedisImpl {
 			MqRedisServiceImpl mq = new MqRedisServiceImpl();
 			mq.setPCallback((ch,msg)->{
 				this.hook(ch,msg);
+				gpioService.load();
 			});
 			String threadName = Thread.currentThread().getName();
 		    jedis.psubscribe(mq, "/*");
+		    
 		    System.out.println("Hello " + threadName);
 		});
 		System.out.println("Listener Run");	
