@@ -5,7 +5,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import com.netflix.servo.monitor.Timer;
 
 public class TimerServiceImpl {
 	ScheduledExecutorService scheduledThreadPool;
