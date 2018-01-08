@@ -40,6 +40,13 @@
 			<version>1.2-SNAPSHOT</version>
 		</dependency>
 
+		<!-- http hook  -->
+		<dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.4</version>
+		</dependency>
+
 		<!-- dev -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
