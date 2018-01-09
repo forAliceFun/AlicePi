@@ -1,6 +1,8 @@
 package fun.forAlice.AlicePi.core.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi4j.io.gpio.GpioPin;
@@ -21,23 +23,29 @@ public class Gpio implements Serializable{
 		
 		private Integer output=1;
 		
-		private String hook="";
+		private List<String> hook;
 		
 		private String key;
 		
 
 		public Gpio() {
-			
+			hook = new ArrayList<>();
 		}
 	
 		public Gpio(Integer raspiPinNum){
 			this.id = raspiPinNum;
 			this.raspiPinNum = raspiPinNum;
 			this.key = "gpio_"+raspiPinNum;
+			this.hook = new ArrayList<>();
 		}
 		
 		public static String generateKey(Integer raspiPinNum) {
 			return "gpio_"+raspiPinNum;
+		}
+		
+		public Integer insertHook(String url) {
+			this.hook.add(url);
+			return this.hook.size();
 		}
 		public String getKey() {
 			return key;
@@ -94,11 +102,11 @@ public class Gpio implements Serializable{
 			this.output = output;
 		}
 
-		public String getHook() {
+		public List<String> getHook() {
 			return hook;
 		}
 
-		public void setHook(String hook) {
+		public void setHook(List<String> hook) {
 			this.hook = hook;
 		}
 
