@@ -119,55 +119,8 @@ public class GpioServiceImpl extends IRedisService<Gpio> {
 			}
 			if (gpio.getType().equals("input")) {
 				
-//				this.inputRefresh(gpio);
-				Gpio inputGpio2 = gpio;
-				GpioPinDigitalMultipurpose pin = pinList.get(inputGpio2.getId());
-				pin.setMode(PinMode.DIGITAL_INPUT);
-				pin.setPullResistance(PinPullResistance.PULL_DOWN);
-				Map<String, GpioCallbackTrigger> hookCallback = callbackPool.get(inputGpio2.getId());
-				Set<String> oldHooks = hookCallback.keySet();
-				List<String> newHooks = inputGpio2.getHook();
-				for(String hook:newHooks) {
-					if(oldHooks.contains(hook)) {
-						logger.info("exist");
-						continue;
-					}
-					logger.info("gpio " + inputGpio2.getId() + ", add hook: " + hook);
-					GpioCallbackTrigger callback2 = new GpioCallbackTrigger(() -> {
-						int input = pin.getState() == PinState.HIGH ? 1 : 0;
-						inputGpio2.setInput(input);
-						String json = objectMapper.writeValueAsString(inputGpio2);
-						httpHookService.postHook(hook, json);
-						logger.info("send: " + json);
-						return null;
-					});
-					
-					hookCallback.put(hook, 
-							callback2);
-					pin.addTrigger(callback2);
-				}
-				
-				// 移除失效的回调
-				oldHooks.stream()
-						.filter(hook->!newHooks.contains(hook))
-						.forEach(hook->{
-							GpioCallbackTrigger callback = hookCallback.get(hook);
-							hookCallback.remove(hook);
-							logger.error("remove " + hook);
-							pin.removeTrigger(callback);	
-						});
-//				for(String hook:oldHooks) {
-//					if(newHooks.contains(hook)) {
-//						logger.info(hook + " remain");
-//						continue;
-//					}
-//							
-//				}
-					
-				
-				gpioList.set(inputGpio2.getId(), inputGpio2);
-				callbackPool.set(inputGpio2.getId(), hookCallback);
-				logger.info("hooks :"+hookCallback.keySet().toString());
+				this.inputRefresh(gpio);
+
 			}
 		}
 
@@ -196,40 +149,64 @@ public class GpioServiceImpl extends IRedisService<Gpio> {
 	}
 
 	private void inputRefresh(Gpio inputGpio) {
-		GpioPinDigitalMultipurpose pin = pinList.get(inputGpio.getId());
+		Gpio inputGpio2 = inputGpio;
+		this.pin2Input(inputGpio);
+		
+		Map<String, GpioCallbackTrigger> hookCallback = callbackPool.get(inputGpio2.getId());
+		Set<String> oldHooks = hookCallback.keySet();
+		Set<String> newHooks = inputGpio2.getHook();
 
-		logger.error("refresh");
+		for(String hook:newHooks) {
+			if(oldHooks.contains(hook)) {
+				logger.info(hook+" exist");
+				continue;
+			}
+			logger.info("gpio " + inputGpio2.getId() + ", add hook: " + hook);
+			GpioCallbackTrigger callback2 = this.generateCallback(hook ,inputGpio2);
+			hookCallback.put(hook, 	callback2);
+		}
+		gpioList.set(inputGpio2.getId(), inputGpio2);
+		callbackPool.set(inputGpio2.getId(), hookCallback);
+		
+		// 移除失效的回调
+		oldHooks.forEach(hook->{
+			if(newHooks.contains(hook)) {
+				return;
+			}
+			this.removeCallback(hook,inputGpio2);
+			hookCallback.remove(hook);
+		});			
+		
+		logger.info("gpio " + inputGpio2.getId() + " hooks :"+hookCallback.keySet().toString());
+	}
+	
+	private void pin2Input(Gpio gpio) {
+		GpioPinDigitalMultipurpose pin = pinList.get(gpio.getId());
 		pin.setMode(PinMode.DIGITAL_INPUT);
 		pin.setPullResistance(PinPullResistance.PULL_DOWN);
-		Map<String, GpioCallbackTrigger> hookCallback = inputGpio.getHookCallback();
-		Set<String> oldHooks = hookCallback.keySet();
-		List<String> newHooks = inputGpio.getHook();
-
-		newHooks.stream().filter(hook -> !oldHooks.contains(hook)).forEach(hook -> {
-			logger.info("gpio " + inputGpio.getId() + ", add hook: " + hook);
-			GpioCallbackTrigger callback = new GpioCallbackTrigger(() -> {
-				int input = pin.getState() == PinState.HIGH ? 1 : 0;
-				inputGpio.setInput(input);
-				String json = objectMapper.writeValueAsString(inputGpio);
-				httpHookService.postHook(hook, json);
-				logger.info("send: " + json);
-				return null;
-			});
-			hookCallback.put(hook, callback);
-			pin.addTrigger(callback);
-		});
-		// 移除失效的回调
-		oldHooks.retainAll(newHooks);
-		oldHooks.forEach(hook -> {
-			GpioCallbackTrigger callback = hookCallback.get(hook);
-			pin.removeTrigger(callback);
-		});
-
-		// 保存数据
-		inputGpio.setHookCallback(hookCallback);
-		gpioList.set(inputGpio.getId(), inputGpio);
 	}
-
+	private GpioCallbackTrigger generateCallback(String hook,Gpio gpio) {
+		GpioPinDigitalMultipurpose pin = pinList.get(gpio.getId());
+		GpioCallbackTrigger callback =  new GpioCallbackTrigger(() -> {
+			int input = pin.getState() == PinState.HIGH ? 1 : 0;
+			gpio.setInput(input);
+			String json = objectMapper.writeValueAsString(gpio);
+			httpHookService.postHook(hook, json);
+			logger.info("send: " + json);
+			return null;
+		});
+		pin.addTrigger(callback);
+		return callback;
+	}
+	
+	private void removeCallback(String hook,Gpio gpio) {
+		GpioPinDigitalMultipurpose pin = pinList.get(gpio.getId());
+		Map<String, GpioCallbackTrigger> hookCallback = callbackPool.get(gpio.getId());
+		GpioCallbackTrigger callback = hookCallback.get(hook);
+		logger.info("gpio " + gpio.getId() + "remove " + hook);
+		pin.removeTrigger(callback);
+	}
+	
 	@PreDestroy
 	public void cleanUp() throws Exception {
 		System.out.println("Spring Container is destroy! Customer clean up");

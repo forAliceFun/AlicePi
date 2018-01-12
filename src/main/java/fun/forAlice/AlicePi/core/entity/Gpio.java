@@ -2,112 +2,133 @@ package fun.forAlice.AlicePi.core.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.trigger.GpioCallbackTrigger;
 
+public class Gpio implements Serializable {
 
-public class Gpio implements Serializable{
+	private Integer id;
 
-		private Integer id;
-		
-		private Integer raspiPinNum;
-		
-		private String type="output";
-		
-		private String mode="pull-down";
-		
-		private Integer input=0;
-		
-		private Integer output=1;
-		
-		private List<String> hook;
-		
-		private String key;
-		
+	private Integer raspiPinNum;
 
-		public Gpio() {
-			hook = new ArrayList<>();
-		}
-	
-		public Gpio(Integer raspiPinNum){
-			this.id = raspiPinNum;
-			this.raspiPinNum = raspiPinNum;
-			this.key = "gpio_"+raspiPinNum;
-			this.hook = new ArrayList<>();
-		}
-		
-		public static String generateKey(Integer raspiPinNum) {
-			return "gpio_"+raspiPinNum;
-		}
-		
-		public Integer insertHook(String url) {
-			this.hook.add(url);
-			return this.hook.size();
-		}
-		public String getKey() {
-			return key;
-		}
-	
-		public void setKey(String key) {
-			this.key = key;
-		}
-		public Integer getId() {
-			return id;
-		}
+	private String type = "output";
 
-		public void setId(Integer id) {
-			this.id = id;
-		}
+	private String mode = "pull-down";
 
-		public Integer getraspiPinNum() {
-			return raspiPinNum;
-		}
+	private Integer input = 0;
 
-		public void setraspiPinNum(Integer raspiPinNum) {
-			this.raspiPinNum = raspiPinNum;
-		}
+	private Integer output = 1;
 
-		public String getType() {
-			return type;
-		}
+	private Set<String> hook;
 
-		public void setType(String type) {
-			this.type = type;
-		}
+	private String key;
 
-		public String getMode() {
-			return mode;
-		}
+	@JsonIgnore
+	private Map<String, GpioCallbackTrigger> hookCallback=new HashMap<>();
 
-		public void setMode(String mode) {
-			this.mode = mode;
-		}
+	public void addHookCallback(String hook ,GpioCallbackTrigger callback) {
+		hookCallback.put(hook, callback);
+	}
+	public void removeHookCallback(String hook) {
+		hookCallback.remove(hook);
+	}
+	public Gpio() {
+		hook = new HashSet<>();
+	}
 
-		public Integer getInput() {
-			return input;
-		}
+	public Gpio(Integer raspiPinNum) {
+		this.id = raspiPinNum;
+		this.raspiPinNum = raspiPinNum;
+		this.key = "gpio_" + raspiPinNum;
+		this.hook = new HashSet<>();
+	}
 
-		public void setInput(Integer input) {
-			this.input = input;
-		}
+	public static String generateKey(Integer raspiPinNum) {
+		return "gpio_" + raspiPinNum;
+	}
 
-		public Integer getOutput() {
-			return output;
-		}
+	public Integer insertHook(String url) {
+		this.hook.add(url);
+		return this.hook.size();
+	}
 
-		public void setOutput(Integer output) {
-			this.output = output;
-		}
+	public String getKey() {
+		return key;
+	}
 
-		public List<String> getHook() {
-			return hook;
-		}
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-		public void setHook(List<String> hook) {
-			this.hook = hook;
-		}
+	public Integer getId() {
+		return id;
+	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getraspiPinNum() {
+		return raspiPinNum;
+	}
+
+	public void setraspiPinNum(Integer raspiPinNum) {
+		this.raspiPinNum = raspiPinNum;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public Integer getInput() {
+		return input;
+	}
+
+	public void setInput(Integer input) {
+		this.input = input;
+	}
+
+	public Integer getOutput() {
+		return output;
+	}
+
+	public void setOutput(Integer output) {
+		this.output = output;
+	}
+
+	public Set<String> getHook() {
+		return hook;
+	}
+
+	public void setHook(Set<String> hook) {
+		this.hook = hook;
+	}
+
+	public Map<String, GpioCallbackTrigger> getHookCallback() {
+		return hookCallback;
+	}
+
+	public void setHookCallback(Map<String, GpioCallbackTrigger> hookCallback) {
+		this.hookCallback = hookCallback;
+	}
 }

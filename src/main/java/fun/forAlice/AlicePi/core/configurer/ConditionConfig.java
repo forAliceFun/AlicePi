@@ -21,7 +21,7 @@ import com.pi4j.io.gpio.RaspiPin;
 
 import fun.forAlice.AlicePi.core.condition.LinuxCondition;
 import fun.forAlice.AlicePi.core.condition.WindowsCondition;
-import fun.forAlice.AlicePi.core.entity.GpioPinDigitalOutputDemo;
+import fun.forAlice.AlicePi.core.entity.pin.GpioPinImplDemo;
 import fun.forAlice.AlicePi.core.service.IGpioService;
 
 
@@ -34,7 +34,7 @@ public class ConditionConfig {
 	public List<GpioPinDigital> gpioDemoService() {
 		List<GpioPinDigital> pinList  = new ArrayList<>();
 		for(int i=0;i<32;i++) {
-			pinList.add(new GpioPinDigitalOutputDemo());
+			pinList.add(new GpioPinImplDemo());
 		}
 		return pinList;
 	}

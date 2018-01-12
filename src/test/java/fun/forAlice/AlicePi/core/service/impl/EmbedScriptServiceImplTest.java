@@ -1,6 +1,5 @@
 package fun.forAlice.AlicePi.core.service.impl;
 
-import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
