@@ -31,10 +31,11 @@ public class ConditionConfig {
 
     @Bean
 	@Conditional(WindowsCondition.class)
-	public List<GpioPinDigital> gpioDemoService() {
-		List<GpioPinDigital> pinList  = new ArrayList<>();
+	public List<GpioPinDigitalMultipurpose> gpioDemoService() {
+		List<GpioPinDigitalMultipurpose> pinList  = new ArrayList<>();
 		for(int i=0;i<32;i++) {
-			pinList.add(new GpioPinImplDemo());
+			GpioPinDigitalMultipurpose pin =  (GpioPinDigitalMultipurpose) new GpioPinImplDemo();
+			pinList.add(pin);
 		}
 		return pinList;
 	}
