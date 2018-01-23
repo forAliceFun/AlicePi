@@ -60,8 +60,11 @@ public class ConditionConfig {
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_12 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_13 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_14 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
-		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_15 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
-		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_16 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
+//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_15 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
+//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_16 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
+		
+		pinList.add((GpioPinDigitalMultipurpose) new GpioPinImplDemo());
+		pinList.add((GpioPinDigitalMultipurpose) new GpioPinImplDemo());
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_17 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_18 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_19 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
