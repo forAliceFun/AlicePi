@@ -1,4 +1,4 @@
-package fun.forAlice.AlicePi.core.configurer;
+package fun.forAlice.AlicePi.core.configurer.raspberry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,36 +11,20 @@ import org.springframework.context.annotation.Configuration;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigital;
 import com.pi4j.io.gpio.GpioPinDigitalMultipurpose;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinMode;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
 import fun.forAlice.AlicePi.core.condition.LinuxCondition;
 import fun.forAlice.AlicePi.core.condition.WindowsCondition;
 import fun.forAlice.AlicePi.core.entity.pin.GpioPinImplDemo;
-import fun.forAlice.AlicePi.core.service.IGpioService;
-
 
 @Configuration
-public class ConditionConfig {
-    Logger logger = LoggerFactory.getLogger(ConditionConfig.class);
+public class PinConfig {
+    Logger logger = LoggerFactory.getLogger("RaspberryPi Environment PinConig");
 
     @Bean
-	@Conditional(WindowsCondition.class)
-	public List<GpioPinDigitalMultipurpose> gpioDemoService() {
-		List<GpioPinDigitalMultipurpose> pinList  = new ArrayList<>();
-		for(int i=0;i<32;i++) {
-			GpioPinDigitalMultipurpose pin =  (GpioPinDigitalMultipurpose) new GpioPinImplDemo();
-			pinList.add(pin);
-		}
-		return pinList;
-	}
-
-	@Bean
 	@Conditional(LinuxCondition.class)
 	public List<GpioPinDigitalMultipurpose> gpioRaspService() {
 		GpioController gpioCtr = GpioFactory.getInstance();
@@ -60,11 +44,14 @@ public class ConditionConfig {
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_12 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_13 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_14 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
-//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_15 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
-//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_16 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
+
+		// uart port
+		//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_15 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
+		//		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_16 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		
 		pinList.add((GpioPinDigitalMultipurpose) new GpioPinImplDemo());
 		pinList.add((GpioPinDigitalMultipurpose) new GpioPinImplDemo());
+		
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_17 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_18 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_19 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_DOWN));
@@ -82,5 +69,5 @@ public class ConditionConfig {
 		pinList.add(gpioCtr.provisionDigitalMultipurposePin(RaspiPin.GPIO_31 ,PinMode.DIGITAL_OUTPUT, PinPullResistance.PULL_UP));
 
 		return pinList;
-	}
+	}   
 }

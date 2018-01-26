@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi4j.io.serial.SerialDataEvent;
 
 public class Uart {
@@ -38,6 +39,7 @@ public class Uart {
 	public String event;
 	public Set<String> hook;
 	
+	@JsonIgnore
 	public Byte[] getTxBytes() {
 		List<Byte> bytes = new ArrayList<Byte>();
 		String hexString = this.tx.hexByteString;

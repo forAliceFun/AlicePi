@@ -6,7 +6,7 @@ public interface GpioPinDigitalDemo extends com.pi4j.io.gpio.GpioPinDigital {
 
 	@Override
 	default PinState getState() {
-		return null;
+		return PinState.HIGH;
 	}
 
 	@Override

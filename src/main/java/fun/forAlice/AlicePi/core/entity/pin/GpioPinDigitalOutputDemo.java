@@ -7,7 +7,7 @@ import com.pi4j.io.gpio.PinState;
 
 public interface GpioPinDigitalOutputDemo extends com.pi4j.io.gpio.GpioPinDigitalOutput {
 	@Override
-	default Future<?>	blink(long delay) {return null;}
+	default Future<?>	blink(long delay) {return (Future)null;}
 	@Override
 	default Future<?>	blink(long delay, long duration) {return null;}
 	@Override
