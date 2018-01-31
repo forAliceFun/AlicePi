@@ -19,7 +19,7 @@ public class UartDataPayload {
 		String[] hexBytes = hexByteString.split(" ");
 		for(String hexByte:hexBytes) {
 			hexByte = hexByte.replace("0x", "");
-			bytes.add(  Byte.parseByte(hexByte, 16) );
+			bytes.add(  (byte)Integer.parseUnsignedInt(hexByte, 16) );
 		}
 		return bytes.toArray(new Byte[bytes.size()]);
 	}
@@ -62,12 +62,14 @@ public class UartDataPayload {
 	}
 	public void setHexByteString(String hexByteString) {
 		this.hexByteString = hexByteString;
+		syncData();
 	}
 	public String getAsciiString() {
 		return asciiString;
 	}
 	public void setAsciiString(String asciiString) {
 		this.asciiString = asciiString;
+		syncData();
 	}
 	public String getLastDatetime() {
 		return lastDatetime;

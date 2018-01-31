@@ -16,7 +16,7 @@ import fun.forAlice.AlicePi.core.entity.Uart;
 import fun.forAlice.AlicePi.core.entity.UartDataPayload;
 
 @RestController
-@RequestMapping("/uarts/")
+@RequestMapping("/uart/")
 public class UartController {
 	Logger logger = LoggerFactory.getLogger(UartController.class);
 	
@@ -27,6 +27,11 @@ public class UartController {
 	Serial serial;
 	
 	@RequestMapping("tx")
+	/****
+	 * 
+	 * @param payload 	{ "hexByteString" :"", "asciiString":"","lastDatetime":""}
+	 * @return
+	 */
 	public Uart tx(@RequestBody UartDataPayload payload) {
 		Byte[] txBytes = payload.getBytes();
 		for(Byte txByte:txBytes) {

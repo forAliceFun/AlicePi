@@ -26,17 +26,21 @@ public class HttpHookServiceImpl {
 	CloseableHttpClient  httpClient;
 	
 	@PostConstruct
-	void init()  {
+	public void init()  {
 		httpClient =  HttpClients.createDefault();
 		
 
 
 	}
 	
-	String postHook(String url, String json) throws ClientProtocolException, IOException{
+	public String postHook(String url, String json) throws ClientProtocolException, IOException{
 		HttpPost httpPost = new HttpPost(url);
+        StringEntity entity = new StringEntity(json);
+
+		entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
 		httpPost.setEntity(
-				new StringEntity(json)
+				entity
 				);
 
 		CloseableHttpResponse  response = httpClient.execute(httpPost);
